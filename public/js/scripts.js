@@ -23,6 +23,19 @@ $(() => {
     });
   });
 
+  //Chat Form Submit
+  chatForm.on("submit", function(e) {
+    e.preventDefault();
+    socket.emit("send message", message.val());
+    message.val("");
+  });
+
+  //Show Message
+  socket.on("show message", function(data) {
+    chatWindow.append("<li class='list-group-item'><h3><strong>" + data.user + "</strong>: " + data.msg + "</h3></li>");
+    console.log("Sent");
+  });
+
   //Display Usernames
   socket.on("users", (data) => {
     let html = "";

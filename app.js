@@ -28,6 +28,18 @@ io.sockets.on("connection", (socket) => {
     }
   });
 
+  socket.on("send message", (data) => {
+    io.sockets.emit("show message", {msg: data, user: socket.username});
+  });
+
+  socket.on("disconnect", (data) => {
+    if(!socket.username) {
+      return;
+    }
+    users.splice(users.indexOf(socket.username), 1);
+    updateUsers();
+  });
+
   function updateUsers() {
     io.sockets.emit("users", users);
   };
