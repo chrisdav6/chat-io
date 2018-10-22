@@ -17,8 +17,21 @@ $(() => {
       if(data) {
         $("#userFormWrap").hide();
         $("#mainWrap").show();
+      }else {
+        error.html("Username is taken");
       }
     });
+  });
+
+  //Display Usernames
+  socket.on("users", (data) => {
+    let html = "";
+
+    for(let i = 0; i < data.length; i++) {
+      html += "<li class='list-group-item'>" + data[i] + "</li>";
+    }
+
+    users.html(html);
   });
 
 });
